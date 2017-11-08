@@ -1,19 +1,14 @@
 package client;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.InetAddress;
-import java.net.URI;
 import java.net.UnknownHostException;
 
 public class MagicClientDriver {
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public static void main(String[] args) {
 		
 		InetAddress clientHost = null;
-		String flag = ""; // Set to empty string so I can check if the user inputs a flag
 		int defaultPort = 6789;
 		boolean isFlag = false;
 		
@@ -69,21 +64,30 @@ public class MagicClientDriver {
 			}
 		}
 		
-		if (args[0].equals("TCP")){
-			if (args.length == 2){
-				MagicClient mc = new MagicTcpClient(clientHost, defaultPort, "-A");
-			}
-			if (args.length == 3){
-				if (isFlag == true){ // If User enters in just a flag
-					MagicClient mc = new MagicTcpClient(clientHost, defaultPort, args[2]);
-				} else { // If User enters in just a port number
-					int tmp = Integer.parseInt(args[2]);
+		try {
+			if (args[0].equals("TCP")){
+				if (args.length == 2){
+					MagicClient mc = new MagicTcpClient(clientHost, defaultPort, "-A");
+
+				}
+				if (args.length == 3){
+					if (isFlag == true){ // If User enters in just a flag
+						MagicClient mc = new MagicTcpClient(clientHost, defaultPort, args[2]);
+					} else { // If User enters in just a port number
+						int tmp = Integer.parseInt(args[2]);
 					MagicClient mc = new MagicTcpClient(clientHost, tmp, "-A");
 				}
-			}
-			if (args.length == 4){
+				}
+				if (args.length == 4){
 					MagicClient mc = new MagicTcpClient(clientHost, defaultPort, args[3]);
+				}
 			}
+		} catch (ClassNotFoundException e){
+			System.out.println("Class Not Found Exception, Try Again");
+			System.exit(1);
+		} catch (IOException e) {
+			System.out.println("I/O Exception, Can not create Socket, Try Again");
+			System.exit(1);
 		}
 				
 	}
