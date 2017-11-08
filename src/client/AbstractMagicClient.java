@@ -1,3 +1,4 @@
+
 package client;
 
 import java.io.PrintStream;
@@ -5,9 +6,15 @@ import java.net.InetAddress;
 
 public abstract class AbstractMagicClient implements MagicClient {
 
-	InetAddress host;
-	int port;
-	String flag;
+	private InetAddress host;
+	private int port;
+	private String flag;
+	
+	public AbstractMagicClient(InetAddress host, int port, String flag) {
+		this.host = host;
+		this.port = port;
+		this.flag = flag;
+	}
 	
 	protected InetAddress getHost(){
 		return host;
